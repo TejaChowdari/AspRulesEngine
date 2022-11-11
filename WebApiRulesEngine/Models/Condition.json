@@ -1,0 +1,13 @@
+{
+  "WorkflowName": "EmployeeCheck1",
+  "Rules": [
+    {
+      "RuleName": "Employee1",
+      "ErrorMessage": "Employee Not Existing",
+      "ErrorType": "Error",
+      "RuleExpressionType": "LambdaExpression",
+      "SuccessMessage": "Employee1 Found",
+      "Expression": "input1.ID==0 and input1.Firt_Name==\"nagaraju\""
+    }
+  ]  
+}
