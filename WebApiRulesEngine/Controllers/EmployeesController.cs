@@ -70,17 +70,9 @@ namespace WebApiRulesEngine.Controllers
                         cmd.Parameters.AddWithValue("@Gender", Emp.Gender);
                         cmd.Parameters.AddWithValue("@Sal", Emp.Sal);
                         int a = cmd.ExecuteNonQuery();
-                        if (a == 0)
-                        {
-                            return Request.CreateResponse(HttpStatusCode.NotFound);
-                        }
-                        else
-                        {
-                            return Request.CreateResponse(HttpStatusCode.OK, a); ;
-                        }
-                    }
-                }
-                var files = Directory.GetFiles(@"D:\Practice\WebApiRulesEngine\WebApiRulesEngine\Models", "Condition.json", SearchOption.AllDirectories);
+                        
+                
+                var files = Directory.GetFiles(@"D:\Practice\WebApiRulesEngine\WebApiRulesEngine\Models","EmpCheck.json", SearchOption.AllDirectories);
                 if (files == null || files.Length == 0)
                 {
                     throw new Exception("Rules not found.");
@@ -101,8 +93,18 @@ namespace WebApiRulesEngine.Controllers
                         Console.WriteLine($"{workflow.WorkflowName} Evaluation was FAILED");
                     });
                 }
+                if (a == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, a); ;
+                }
             }
-            catch(Exception ex)
+                }
+            }
+            catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
             }

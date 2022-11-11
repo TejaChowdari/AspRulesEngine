@@ -7,7 +7,7 @@
       "ErrorType": "Error",
       "RuleExpressionType": "LambdaExpression",
       "SuccessMessage": "Employee1 Found",
-      "Expression": "input1.ID==Null and input1.Firt_Name==Null and input1.Last_Name==Null and input1.Gender==Null and input1.Sal==Null"
+      "Expression": "input1.ID==1 and input1.Firt_Name==Null and input1.Last_Name==Null and input1.Gender==Null and input1.Sal==Null"
     }
   ]  
 }
