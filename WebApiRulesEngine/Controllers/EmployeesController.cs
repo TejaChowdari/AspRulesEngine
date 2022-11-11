@@ -72,36 +72,36 @@ namespace WebApiRulesEngine.Controllers
                         int a = cmd.ExecuteNonQuery();
                         
                 
-                var files = Directory.GetFiles(@"D:\Practice\WebApiRulesEngine\WebApiRulesEngine\Models","EmpCheck.json", SearchOption.AllDirectories);
-                if (files == null || files.Length == 0)
-                {
-                    throw new Exception("Rules not found.");
-                }
-                var fileData = File.ReadAllText(files[0]);
-                var Workflows = JsonConvert.DeserializeObject<List<Workflow>>(fileData);
-                var bre = new RulesEngine.RulesEngine(Workflows.ToArray(), null);
-                // Console.WriteLine(bre);
-                foreach (var workflow in Workflows)
-                {
-                    var resultList = bre.ExecuteAllRulesAsync(workflow.WorkflowName, Qry.ToArray()).Result;
-                    //bre.ExecuteAllRulesAsync(workflow,ls.ToArray())
-                    resultList.OnSuccess((eventname) =>
-                    {
-                        Console.WriteLine($"{workflow.WorkflowName} Evaluation was SUCCESS - {eventname}");
-                    }).OnFail(() =>
-                    {
-                        Console.WriteLine($"{workflow.WorkflowName} Evaluation was FAILED");
-                    });
-                }
-                if (a == 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, a); ;
-                }
-            }
+                        var files = Directory.GetFiles(@"D:\Practice\WebApiRulesEngine\WebApiRulesEngine\Models","EmpCheck.json", SearchOption.AllDirectories);
+                        if (files == null || files.Length == 0)
+                        {
+                            throw new Exception("Rules not found.");
+                        }
+                        var fileData = File.ReadAllText(files[0]);
+                        var Workflows = JsonConvert.DeserializeObject<List<Workflow>>(fileData);
+                        var bre = new RulesEngine.RulesEngine(Workflows.ToArray(), null);
+                        // Console.WriteLine(bre);
+                        foreach (var workflow in Workflows)
+                        {
+                            var resultList = bre.ExecuteAllRulesAsync(workflow.WorkflowName, Qry.ToArray()).Result;
+                            //bre.ExecuteAllRulesAsync(workflow,ls.ToArray())
+                            resultList.OnSuccess((eventname) =>
+                            {
+                                Console.WriteLine($"{workflow.WorkflowName} Evaluation was SUCCESS - {eventname}");
+                            }).OnFail(() =>
+                            {
+                                Console.WriteLine($"{workflow.WorkflowName} Evaluation was FAILED");
+                            });
+                        }
+                        if (a == 0)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.NotFound);
+                        }
+                        else
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK, a); ;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
