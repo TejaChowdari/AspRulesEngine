@@ -70,8 +70,6 @@ namespace WebApiRulesEngine.Controllers
                         cmd.Parameters.AddWithValue("@Gender", Emp.Gender);
                         cmd.Parameters.AddWithValue("@Sal", Emp.Sal);
                         int a = cmd.ExecuteNonQuery();
-                        
-                
                         var files = Directory.GetFiles(@"D:\Practice\WebApiRulesEngine\WebApiRulesEngine\Models","EmpCheck.json", SearchOption.AllDirectories);
                         if (files == null || files.Length == 0)
                         {
