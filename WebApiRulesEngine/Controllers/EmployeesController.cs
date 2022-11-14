@@ -17,7 +17,7 @@ namespace WebApiRulesEngine.Controllers
     public class EmployeesController : ApiController
     {
         [HttpGet]
-        public IEnumerable<Employee1> get()
+        public IEnumerable<Employee1> Get()
         {
             string cs = ConfigurationManager.ConnectionStrings["TejaDB"].ConnectionString;
             try
@@ -52,6 +52,43 @@ namespace WebApiRulesEngine.Controllers
                 return null;
             }
         }
+        /*
+        [HttpGet]
+        public string GetId(int id, string employees)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["TejaDB"].ConnectionString;
+            try
+            {
+                List<Employee1> employees = new List<Employee1>();
+                string Qry = @" select * from Employee";
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    using (SqlCommand cmd = new SqlCommand(Qry, con))
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable table = new DataTable();
+                        da.Fill(table);
+                        foreach (DataRow c in table.Rows)
+                        {
+                            employees.Add(new Employee1
+                            {
+                                ID = Convert.ToInt32(c["ID"]),
+                                First_Name = c["First_Name"].ToString(),
+                                Last_Name = c["Last_Name"].ToString(),
+                                Gender = c["Gender"].ToString(),
+                                Sal = Convert.ToInt32(c["Sal"])
+                            });
+                        }
+                        return employees;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }*/
         [HttpPost]
         public HttpResponseMessage Post(Employee1 Emp)
         {
