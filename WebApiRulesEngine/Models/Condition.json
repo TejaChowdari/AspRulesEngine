@@ -7,7 +7,7 @@
       "ErrorType": "Error",
       "RuleExpressionType": "LambdaExpression",
       "SuccessMessage": "Employee1 Found",
-      "Expression": "input1.ID==0 and input1.Firt_Name==\"nagaraju\""
+      "Expression": "Qry.id==c.ID"
     }
   ]  
 }

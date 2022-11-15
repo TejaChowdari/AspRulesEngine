@@ -52,15 +52,15 @@ namespace WebApiRulesEngine.Controllers
                 return null;
             }
         }
-        /*
+        
         [HttpGet]
-        public string GetId(int id, string employees)
+        public void GetId(int id, string employees)
         {
             string cs = ConfigurationManager.ConnectionStrings["TejaDB"].ConnectionString;
             try
             {
-                List<Employee1> employees = new List<Employee1>();
-                string Qry = @" select * from Employee";
+                Employee1 employees1 = new Employee1();
+                string Qry = @"select * from Employee where Id=" + id;
                 using (SqlConnection con = new SqlConnection(cs))
                 {
                     using (SqlCommand cmd = new SqlCommand(Qry, con))
@@ -70,25 +70,46 @@ namespace WebApiRulesEngine.Controllers
                         da.Fill(table);
                         foreach (DataRow c in table.Rows)
                         {
-                            employees.Add(new Employee1
+                            employees1 = new Employee1
                             {
                                 ID = Convert.ToInt32(c["ID"]),
                                 First_Name = c["First_Name"].ToString(),
                                 Last_Name = c["Last_Name"].ToString(),
                                 Gender = c["Gender"].ToString(),
                                 Sal = Convert.ToInt32(c["Sal"])
+                            };
+                        }
+                        var files = Directory.GetFiles(@"D:\Practice\WebApiRulesEngine\WebApiRulesEngine\Models", "Condition.json", SearchOption.AllDirectories);
+                        if (files == null || files.Length == 0)
+                        {
+                            throw new Exception("Rules not found.");
+                        }
+                        var fileData = File.ReadAllText(files[0]);
+                        var Workflows = JsonConvert.DeserializeObject<List<Workflow>>(fileData);
+                        var bre = new RulesEngine.RulesEngine(Workflows.ToArray(), null);
+                        // Console.WriteLine(bre);
+                        foreach (var workflow in Workflows)
+                        {
+                            var resultList = bre.ExecuteAllRulesAsync(workflow.WorkflowName, employees1).Result;
+                            //bre.ExecuteAllRulesAsync(workflow,ls.ToArray())
+                            resultList.OnSuccess((eventname) =>
+                            {
+                                Console.WriteLine($"{workflow.WorkflowName} Evaluation was SUCCESS - {eventname}");
+                            }).OnFail(() =>
+                            {
+                                Console.WriteLine($"{workflow.WorkflowName} Evaluation was FAILED");
                             });
                         }
-                        return employees;
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
+                
             }
-        }*/
+
+        }
         [HttpPost]
         public HttpResponseMessage Post(Employee1 Emp)
         {
